@@ -1,4 +1,6 @@
 import flet as ft
+from flet import MainAxisAlignment
+from model.model import Model
 from UI.alert import AlertManager
 
 '''
@@ -31,15 +33,19 @@ class View:
         self.page.update()
 
     def load_interface(self):
+        risultati = self.get_biblioteche()
         """ Crea e aggiunge gli elementi di UI alla pagina e la aggiorna. """
         # --- Sezione 1: Intestazione ---
         self.txt_titolo = ft.Text(value="Biblioteche di Torino", size=38, weight=ft.FontWeight.BOLD)
 
         # --- Sezione 2: Filtraggio ---
-        # TODO
+        self.dd_biblioteche = ft.Dropdown(label = "Biblioteche", width= 300)
+        self.dd_biblioteche.options.append()
+        self.dd_generi = ft.Dropdown(label = "Generi", width= 200)
 
         # Sezione 3: Libri
-        # TODO
+        self._list_view = ft.ListView(expand=True, spacing=10)
+        self.page.controls.append(self._list_view)
 
         # --- Toggle Tema ---
         self.toggle_cambia_tema = ft.Switch(label="Tema scuro", value=True, on_change=self.cambia_tema)
@@ -53,7 +59,7 @@ class View:
             ft.Divider(),
 
             # Sezione 2: Filtraggio
-            # TODO
+            ft.Row([self.dd_biblioteche,self.dd_generi], alignment = MainAxisAlignment.CENTER, spacing= 80)
 
             # Sezione 3: Libri
             # TODO

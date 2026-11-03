@@ -18,7 +18,8 @@ class Controller:
         self.genere_selezionato = None
 
     # POPOLA DROPDOWN
-    # TODO
+   # def handler_dd_biblioteca (self,e):
+
 
     # CALLBACKS DROPDOWN
     # TODO

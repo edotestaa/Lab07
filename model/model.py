@@ -24,5 +24,5 @@ class Model:
 
     # --- BIBLIOTECHE ---
     def get_biblioteche(self):
-        """ Restituisce la lista di tutte le biblioteche."""
-        # TODO
+        dao = BibliotecaDAO()
+        return dao.get_biblioteche()
