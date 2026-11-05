@@ -10,9 +10,10 @@ class BibliotecaDAO:
     def __init__(self):
         pass
 
-    def get_biblioteche(self,e):
-        db = DBConnect()
-        cnx = db.get_connection()
+    def get_biblioteche(self):
+        result = []
+
+        cnx = DBConnect.get_connection()
         if cnx is not None:
             print("Connection established")
             query = "SELECT nome FROM biblioteca"
@@ -20,8 +21,7 @@ class BibliotecaDAO:
             cursor.execute(query)
             result = []
             for row in cursor:
-                biblioteche = Biblioteca(*row)
-                result.append(biblioteche)
+                result.append(row[0])
 
             cursor.close()
             cnx.close()

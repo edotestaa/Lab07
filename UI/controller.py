@@ -19,7 +19,8 @@ class Controller:
 
     # POPOLA DROPDOWN
    # def handler_dd_biblioteca (self,e):
-
+    def get_biblioteche(self):
+        return self._model.get_biblioteche()
 
     # CALLBACKS DROPDOWN
     # TODO
