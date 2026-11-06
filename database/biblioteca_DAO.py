@@ -16,12 +16,11 @@ class BibliotecaDAO:
         cnx = DBConnect.get_connection()
         if cnx is not None:
             print("Connection established")
-            query = "SELECT nome FROM biblioteca"
             cursor = cnx.cursor()
+            query = "SELECT * FROM biblioteca ORDER BY nome ASC"
             cursor.execute(query)
-            result = []
             for row in cursor:
-                result.append(row[0])
+                result.append(Biblioteca(*row))
 
             cursor.close()
             cnx.close()

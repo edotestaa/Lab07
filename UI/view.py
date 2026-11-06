@@ -35,18 +35,42 @@ class View:
         self.page.update()
 
     def load_interface(self):
-        risultati = self._controller.get_biblioteche()
+        biblioteche = self._controller.get_biblioteche()
+        generi = self._controller.get_generi()
         """ Crea e aggiunge gli elementi di UI alla pagina e la aggiorna. """
+
         # --- Sezione 1: Intestazione ---
         self.txt_titolo = ft.Text(value="Biblioteche di Torino", size=38, weight=ft.FontWeight.BOLD)
 
         # --- Sezione 2: Filtraggio ---
-        self.dd_biblioteche = ft.Dropdown(label = "Biblioteche", width= 300)
-        self.dd_biblioteche.options.append(risultati)
-        self.dd_generi = ft.Dropdown(label = "Generi", width= 200)
+        opzioni_biblioteche = [ft.dropdown.Option(key="Nessun filtro", text="Nessun filtro")]
+        opzioni_generi = [ft.dropdown.Option(key="Nessun filtro", text="Nessun filtro")]
+
+        self.dd_biblioteche = ft.Dropdown(
+            label="Biblioteche",
+            width=350,
+            value="Nessun filtro",
+            options=opzioni_biblioteche,
+            on_select=self._controller.get_biblioteche if self._controller else None
+        )
+
+        self.dd_generi = ft.Dropdown(
+            label="Generi",
+            width=220,
+            value="Nessun filtro",
+            options=opzioni_generi,
+            on_select=self._controller.get_generi if self._controller else None
+        )
+
+        for g in generi:
+            opzioni_generi.append(ft.dropdown.Option(key=str(g), text=str(g)))
+
+        for b in biblioteche:
+            nome = b.nome if hasattr(b, "nome") else str(b)
+            opzioni_biblioteche.append(ft.dropdown.Option(key=nome, text=nome))
 
         # Sezione 3: Libri
-        self._list_view = ft.ListView(expand=True, spacing=10)
+        self._list_view = ft.ListView(height=300, spacing=10)
 
 
         # --- Toggle Tema ---
@@ -61,7 +85,7 @@ class View:
             ft.Divider(),
 
             # Sezione 2: Filtraggio
-            ft.Row([self.dd_biblioteche,self.dd_generi], alignment = MainAxisAlignment.CENTER, spacing= 80),
+            ft.Row([self.dd_biblioteche, self.dd_generi], alignment = MainAxisAlignment.CENTER, spacing= 80),
 
             # Sezione 3: Libri
             ft.Row([ft.Button("Mostra Libri")], alignment = MainAxisAlignment.CENTER),

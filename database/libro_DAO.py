@@ -10,4 +10,19 @@ class LibroDAO:
     def __init__(self):
         pass
 
-    # TODO
+    def get_generi(self):
+        result2 = []
+
+        cnx = DBConnect.get_connection()
+        if cnx is not None:
+            print("Connection established")
+            cursor = cnx.cursor()
+            query = "SELECT DISTINCT genere FROM libro ORDER BY genere ASC"
+            cursor.execute(query)
+            for row in cursor:
+                result2.append(row[0])
+
+            cursor.close()
+            cnx.close()
+        return result2
+
