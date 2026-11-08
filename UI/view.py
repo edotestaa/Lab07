@@ -70,6 +70,7 @@ class View:
             opzioni_biblioteche.append(ft.dropdown.Option(key=nome, text=nome))
 
         # Sezione 3: Libri
+        self._btn_mostra_libri = ft.Button(  "Mostra Libri", on_click = self._controller.mostra_libri)
         self._list_view = ft.ListView(height=300, spacing=10)
 
 
@@ -88,7 +89,7 @@ class View:
             ft.Row([self.dd_biblioteche, self.dd_generi], alignment = MainAxisAlignment.CENTER, spacing= 80),
 
             # Sezione 3: Libri
-            ft.Row([ft.Button("Mostra Libri")], alignment = MainAxisAlignment.CENTER),
+            ft.Row([self._btn_mostra_libri], alignment = MainAxisAlignment.CENTER),
             self._list_view,
         )
 

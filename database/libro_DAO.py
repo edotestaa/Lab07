@@ -26,3 +26,25 @@ class LibroDAO:
             cnx.close()
         return result2
 
+    def get_libri_filtrati(self, nome_biblioteca=None, genere=None):
+        result = []
+        cnx = DBConnect.get_connection()
+        if cnx is not None:
+            cursor = cnx.cursor()
+            query = """
+                SELECT DISTINCT l.*
+                FROM libro l, biblioteca b
+                WHERE l.id_biblioteca = b.id
+                  AND b.nome = COALESCE(%s, b.nome)
+                  AND l.genere = COALESCE(%s, l.genere)
+                ORDER BY l.titolo ASC
+            """
+            cursor.execute(query, (nome_biblioteca, genere))
+
+            for row in cursor:
+                result.append(Libro(*row))
+
+            cursor.close()
+            cnx.close()
+        return result
+
